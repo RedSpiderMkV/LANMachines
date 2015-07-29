@@ -9,7 +9,7 @@ namespace LanMachines
     {
         private static int pingerCount = 0;
 
-        static void Main(string[] args)
+        internal static void Main(string[] args)
         {
             Ping ping = new Ping();
             List<Ping> pingers = new List<Ping>();
@@ -24,7 +24,7 @@ namespace LanMachines
             foreach(Ping pinger in pingers)
             {
                 pinger.PingCompleted += new PingCompletedEventHandler(pinger_PingCompleted);
-                pinger.SendAsync(baseIp + pingerCount.ToString(), 100, null);
+                pinger.SendAsync(baseIp + pingerCount.ToString(), 500, null);
 
                 pingerCount++;
             }
