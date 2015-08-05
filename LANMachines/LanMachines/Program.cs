@@ -11,7 +11,6 @@ namespace LanMachines
 
         internal static void Main(string[] args)
         {
-            Ping ping = new Ping();
             List<Ping> pingers = new List<Ping>();
 
             for (int i = 1; i < 255; i++)
