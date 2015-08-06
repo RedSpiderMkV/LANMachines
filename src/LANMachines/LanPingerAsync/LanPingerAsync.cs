@@ -12,12 +12,12 @@ namespace LanPinger
     {
         #region Public Methods
 
-        public LanPingerAsync(int pingerCount)
+        public LanPingerAsync()
         {
             activePingers_m = 0;
             activeMachines_m = new List<string>();
 
-            initialiseLanPingers(pingerCount);
+            initialiseLanPingers(255);
             ipAddressBaseSet_m = initialiseIpBase();
         } // end method
 

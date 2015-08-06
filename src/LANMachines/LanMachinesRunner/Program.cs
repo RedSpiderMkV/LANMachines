@@ -11,7 +11,7 @@ namespace LanMachines
     {
         internal static void Main(string[] args)
         {
-            using (LanPingerAsync asyncPinger = new LanPingerAsync(255))
+            using (LanPingerAsync asyncPinger = new LanPingerAsync())
             {
                 asyncPinger.PingAllAsync();
                 List<string> activeAddresses = asyncPinger.GetActiveMachines();
