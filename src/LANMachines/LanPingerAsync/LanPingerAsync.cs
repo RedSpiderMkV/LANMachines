@@ -12,15 +12,22 @@ namespace LanPinger
     {
         #region Public Methods
 
+        /// <summary>
+        /// Instantiate a new object to ping all IP addresses on a network
+        /// asynchronously.
+        /// </summary>
         public LanPingerAsync()
         {
             activePingers_m = 0;
             activeMachines_m = new List<string>();
 
-            initialiseLanPingers(255);
+            initialiseLanPingers();
             ipAddressBaseSet_m = initialiseIpBase();
         } // end method
 
+        /// <summary>
+        /// Send ping to all machines asynchronously.
+        /// </summary>
         public void PingAllAsync()
         {
             foreach (Ping ping in lanPingers_m)
@@ -30,6 +37,10 @@ namespace LanPinger
             } // end foreach
         } // end method
 
+        /// <summary>
+        /// Get a list of IP addresses which responded to the ping.
+        /// </summary>
+        /// <returns>List of IP reachable addresses.</returns>
         public List<string> GetActiveMachines()
         {
             while (activePingers_m > 0)
@@ -40,6 +51,9 @@ namespace LanPinger
             return activeMachines_m;
         } // end method
 
+        /// <summary>
+        /// Dispose of object, dispose of all Ping objects.
+        /// </summary>
         public void Dispose()
         {
             while (activePingers_m > 0)
@@ -58,6 +72,10 @@ namespace LanPinger
 
         #region Private Methods
 
+        /// <summary>
+        /// Initialise the base IP address by determining what the gateway address is.
+        /// </summary>
+        /// <returns>True if address was initialised.</returns>
         private bool initialiseIpBase()
         {
             NetworkInterface networkInterface = NetworkInterface.GetAllNetworkInterfaces().FirstOrDefault();
@@ -85,10 +103,13 @@ namespace LanPinger
             return false;
         } // end method
 
-        private void initialiseLanPingers(int pingerCount)
+        /// <summary>
+        /// Initialise the Ping objects.
+        /// </summary>
+        private void initialiseLanPingers()
         {
             lanPingers_m = new List<Ping>();
-            for (int i = 0; i < pingerCount; i++)
+            for (int i = 0; i < 255; i++)
             {
                 Ping ping = new Ping();
                 ping.PingCompleted += new PingCompletedEventHandler(ping_PingCompleted);
@@ -97,6 +118,11 @@ namespace LanPinger
             } // end method
         } // end method
 
+        /// <summary>
+        /// Ping complete event handler.
+        /// </summary>
+        /// <param name="sender">Ping object which has completed the ping.</param>
+        /// <param name="e">Event arg.</param>
         private void ping_PingCompleted(object sender, PingCompletedEventArgs e)
         {
             if (e.Reply.Status == IPStatus.Success)
