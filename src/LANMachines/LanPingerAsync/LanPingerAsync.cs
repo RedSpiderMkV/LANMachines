@@ -15,6 +15,7 @@ namespace LanPinger
         public LanPingerAsync(int pingerCount)
         {
             activePingers_m = 0;
+            activeMachines_m = new List<string>();
 
             initialiseLanPingers(pingerCount);
             ipAddressBaseSet_m = initialiseIpBase();
@@ -27,6 +28,16 @@ namespace LanPinger
                 ping.SendAsync(ipAddressBase_m + activePingers_m.ToString(), 500, null);
                 activePingers_m++;
             } // end foreach
+        } // end method
+
+        public List<string> GetActiveMachines()
+        {
+            while (activePingers_m > 0)
+            {
+                Thread.Sleep(500);
+            } // end while
+
+            return activeMachines_m;
         } // end method
 
         public void Dispose()
@@ -90,7 +101,8 @@ namespace LanPinger
         {
             if (e.Reply.Status == IPStatus.Success)
             {
-                Console.WriteLine(e.Reply.Address.ToString());
+                //Console.WriteLine(e.Reply.Address.ToString());
+                activeMachines_m.Add(e.Reply.Address.ToString());
             } // end if
 
             activePingers_m--;
@@ -102,6 +114,7 @@ namespace LanPinger
 
         private string ipAddressBase_m;
         private List<Ping> lanPingers_m;
+        private List<string> activeMachines_m;
         private bool ipAddressBaseSet_m;
         private int activePingers_m;
 

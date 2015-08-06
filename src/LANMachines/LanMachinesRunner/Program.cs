@@ -14,6 +14,12 @@ namespace LanMachines
             using (LanPingerAsync asyncPinger = new LanPingerAsync(255))
             {
                 asyncPinger.PingAllAsync();
+                List<string> activeAddresses = asyncPinger.GetActiveMachines();
+
+                foreach (string address in activeAddresses)
+                {
+                    Console.WriteLine(address);
+                }
             } // end using
 
             Console.WriteLine("LAN ping complete");
