@@ -11,10 +11,13 @@ namespace LanMachines
     {
         internal static void Main(string[] args)
         {
-            LanPingerAsync asyncPinger = new LanPingerAsync(255);
-            asyncPinger.PingAllAsync();
+            using (LanPingerAsync asyncPinger = new LanPingerAsync(255))
+            {
+                asyncPinger.PingAllAsync();
+            } // end using
 
+            Console.WriteLine("LAN ping complete");
             Console.ReadKey();
-        }
-    }
-}
+        } // end method
+    } // end class
+} // end namespace

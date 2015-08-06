@@ -4,26 +4,42 @@ using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
+using System.Threading;
 
 namespace LanPinger
 {
-    public class LanPingerAsync
+    public class LanPingerAsync : IDisposable
     {
         #region Public Methods
 
         public LanPingerAsync(int pingerCount)
         {
+            activePingers_m = 0;
+
             initialiseLanPingers(pingerCount);
             ipAddressBaseSet_m = initialiseIpBase();
         } // end method
 
         public void PingAllAsync()
         {
-            int pingerCount = 1;
             foreach (Ping ping in lanPingers_m)
             {
-                ping.SendAsync(ipAddressBase_m + pingerCount.ToString(), 500, null);
-                pingerCount++;
+                ping.SendAsync(ipAddressBase_m + activePingers_m.ToString(), 500, null);
+                activePingers_m++;
+            } // end foreach
+        } // end method
+
+        public void Dispose()
+        {
+            while (activePingers_m > 0)
+            {
+                Thread.Sleep(500);
+            } // end while
+
+            foreach (Ping pinger in lanPingers_m)
+            {
+                pinger.PingCompleted -= ping_PingCompleted;
+                pinger.Dispose();
             } // end foreach
         } // end method
 
@@ -49,7 +65,7 @@ namespace LanPinger
                 }
                 else
                 {
-                    ipAddressBase_m = String.Format("{0}.{1}.{2}", parts[0], parts[1], parts[2]);
+                    ipAddressBase_m = String.Format("{0}.{1}.{2}.", parts[0], parts[1], parts[2]);
                     
                     return true;
                 } // end if
@@ -75,13 +91,9 @@ namespace LanPinger
             if (e.Reply.Status == IPStatus.Success)
             {
                 Console.WriteLine(e.Reply.Address.ToString());
-            }
+            } // end if
 
-            Ping sendingPinger = (Ping)sender;
-            sendingPinger.PingCompleted -= ping_PingCompleted;
-
-            lanPingers_m.Remove(sendingPinger);
-            sendingPinger.Dispose();
+            activePingers_m--;
         } // end method
 
         #endregion
@@ -91,6 +103,7 @@ namespace LanPinger
         private string ipAddressBase_m;
         private List<Ping> lanPingers_m;
         private bool ipAddressBaseSet_m;
+        private int activePingers_m;
 
         #endregion
 
