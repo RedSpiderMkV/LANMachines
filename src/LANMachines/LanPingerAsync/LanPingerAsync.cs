@@ -26,23 +26,13 @@ namespace LanPinger
         } // end method
 
         /// <summary>
-        /// Send ping to all machines asynchronously.
-        /// </summary>
-        public void PingAllAsync()
-        {
-            foreach (Ping ping in lanPingers_m)
-            {
-                ping.SendAsync(ipAddressBase_m + activePingers_m.ToString(), 500, null);
-                activePingers_m++;
-            } // end foreach
-        } // end method
-
-        /// <summary>
         /// Get a list of IP addresses which responded to the ping.
         /// </summary>
         /// <returns>List of IP reachable addresses.</returns>
         public List<string> GetActiveMachines()
         {
+            pingAllAsync();
+
             while (activePingers_m > 0)
             {
                 Thread.Sleep(500);
@@ -71,6 +61,18 @@ namespace LanPinger
         #endregion
 
         #region Private Methods
+
+        /// <summary>
+        /// Send ping to all machines asynchronously.
+        /// </summary>
+        private void pingAllAsync()
+        {
+            foreach (Ping ping in lanPingers_m)
+            {
+                ping.SendAsync(ipAddressBase_m + activePingers_m.ToString(), 500, null);
+                activePingers_m++;
+            } // end foreach
+        } // end method
 
         /// <summary>
         /// Initialise the base IP address by determining what the gateway address is.

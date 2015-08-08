@@ -13,7 +13,6 @@ namespace LanMachines
         {
             using (LanPingerAsync asyncPinger = new LanPingerAsync())
             {
-                asyncPinger.PingAllAsync();
                 List<string> activeAddresses = asyncPinger.GetActiveMachines();
 
                 foreach (string address in activeAddresses)
