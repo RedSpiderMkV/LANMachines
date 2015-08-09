@@ -11,6 +11,7 @@ Usage
 ```c#
 using (LanPingerAsync asyncPinger = new LanPingerAsync())
 {
+    // all reachable IP addresses as a list of strings
     List<string> activeAddresses = asyncPinger.GetActiveMachines();
 } // end using
 ```
