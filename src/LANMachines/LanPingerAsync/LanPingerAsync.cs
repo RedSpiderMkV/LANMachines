@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
@@ -80,25 +79,30 @@ namespace LanPinger
         /// <returns>True if address was initialised.</returns>
         private bool initialiseIpBase()
         {
-            NetworkInterface networkInterface = NetworkInterface.GetAllNetworkInterfaces().FirstOrDefault();
-            if (networkInterface == null)
+            NetworkInterface[] networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+
+            if (networkInterfaces == null)
             {
                 ipAddressBase_m = null;
             }
             else
             {
-                string gateWayAddress = networkInterface.GetIPProperties().GatewayAddresses.FirstOrDefault().Address.ToString();
-                string[] parts = gateWayAddress.Split('.');
+                GatewayIPAddressInformationCollection gateWayAddresses = networkInterfaces[0].GetIPProperties().GatewayAddresses;
 
-                if (parts.Length < 3)
+                if (gateWayAddresses != null && gateWayAddresses.Count > 0)
                 {
-                    ipAddressBase_m = null;
-                }
-                else
-                {
-                    ipAddressBase_m = String.Format("{0}.{1}.{2}.", parts[0], parts[1], parts[2]);
-                    
-                    return true;
+                    string[] parts = gateWayAddresses[0].Address.ToString().Split('.');
+
+                    if (parts.Length < 3)
+                    {
+                        ipAddressBase_m = null;
+                    }
+                    else
+                    {
+                        ipAddressBase_m = String.Format("{0}.{1}.{2}.", parts[0], parts[1], parts[2]);
+
+                        return true;
+                    } // end if
                 } // end if
             } // end if
 
