@@ -12,7 +12,10 @@ namespace LanMachines
         internal static void Main(string[] args)
         {
             ArpScanner scanner = new ArpScanner();
-            scanner.GetRespondingMachines();
+            foreach (string s in scanner.GetRespondingMachines())
+            {
+                Console.WriteLine(s);
+            } // end foreach
 
             return;
 

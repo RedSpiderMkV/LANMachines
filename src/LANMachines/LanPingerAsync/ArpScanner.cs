@@ -11,30 +11,21 @@ namespace LanDiscovery
 
         public ArpScanner()
         {
-            // default constructor..
+            // default constructor
         } // end method
 
         public List<string> GetRespondingMachines()
         {
-            List<string> reachableMachines = new List<string>();
-
-            List<string> arpRes = getArpScan();
-
-            foreach (string res in arpRes)
-            {
-                Console.WriteLine(res);
-            } // end foreach
-
-            return reachableMachines;
+            return getArpScan();
         } // end method
 
         #endregion
 
         #region Private Methods
 
-        private List<string> getArpScan()
+        private void initialiseArpScanProc()
         {
-            Process arpProcess = new Process();
+            arpProcess_m = new Process();
             ProcessStartInfo procInfo = new ProcessStartInfo()
             {
                 FileName = "arp",
@@ -44,12 +35,17 @@ namespace LanDiscovery
                 CreateNoWindow = true
             };
 
-            arpProcess.StartInfo = procInfo;
-            arpProcess.Start();
+            arpProcess_m.StartInfo = procInfo;
+            arpProcess_m.Start();
+        } // end method
+
+        private List<string> getArpScan()
+        {
+            initialiseArpScanProc();
 
             string procOut = "";
             List<string> arpScanResults = new List<string>();
-            while ((procOut = arpProcess.StandardOutput.ReadLine()) != null)
+            while ((procOut = arpProcess_m.StandardOutput.ReadLine()) != null)
             {
                 string[] parts = procOut.Trim().Split(' ');
 
@@ -65,10 +61,16 @@ namespace LanDiscovery
                 } // end if
             } // end while
 
-            arpProcess.WaitForExit();
+            arpProcess_m.WaitForExit();
 
             return arpScanResults;
         } // end method
+
+        #endregion
+
+        #region Private Data
+
+        private Process arpProcess_m;
 
         #endregion
 
