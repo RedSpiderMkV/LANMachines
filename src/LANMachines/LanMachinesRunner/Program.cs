@@ -11,6 +11,11 @@ namespace LanMachines
     {
         internal static void Main(string[] args)
         {
+            ArpScanner scanner = new ArpScanner();
+            scanner.GetRespondingMachines();
+
+            return;
+
             using (LanPingerAsync asyncPinger = new LanPingerAsync())
             {
                 List<string> activeAddresses = asyncPinger.GetActiveMachines();
