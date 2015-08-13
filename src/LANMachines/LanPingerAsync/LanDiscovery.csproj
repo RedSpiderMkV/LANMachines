@@ -8,7 +8,7 @@
     <ProjectGuid>{DBDE29C5-DFD5-44C5-82F3-95AA9C5751DB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LanPinger</RootNamespace>
+    <RootNamespace>LanDiscovery</RootNamespace>
     <AssemblyName>LanPingerAsync</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

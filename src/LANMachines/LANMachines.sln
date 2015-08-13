@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanPingerAsync", "LanPingerAsync\LanPingerAsync.csproj", "{DBDE29C5-DFD5-44C5-82F3-95AA9C5751DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanDiscovery", "LanPingerAsync\LanDiscovery.csproj", "{DBDE29C5-DFD5-44C5-82F3-95AA9C5751DB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanMachinesRunner", "LanMachinesRunner\LanMachinesRunner.csproj", "{D2DBFA40-F4A0-4C23-BFEC-B8AD467C46C8}"
 EndProject

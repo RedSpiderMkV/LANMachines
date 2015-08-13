@@ -5,7 +5,7 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
 
-namespace LanPinger
+namespace LanDiscovery
 {
     public class LanPingerAsync : IDisposable
     {

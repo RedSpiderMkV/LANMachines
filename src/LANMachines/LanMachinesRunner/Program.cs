@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.NetworkInformation;
 
-using LanPinger;
+using LanDiscovery;
 
 namespace LanMachines
 {

@@ -47,9 +47,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LanPingerAsync\LanPingerAsync.csproj">
+    <ProjectReference Include="..\LanPingerAsync\LanDiscovery.csproj">
       <Project>{DBDE29C5-DFD5-44C5-82F3-95AA9C5751DB}</Project>
-      <Name>LanPingerAsync</Name>
+      <Name>LanDiscovery</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
