@@ -18,8 +18,12 @@ namespace LanDiscovery
         {
             List<string> reachableMachines = new List<string>();
 
-            string arpRes = getArpScan();
-            Console.WriteLine(arpRes);
+            List<string> arpRes = getArpScan();
+
+            foreach (string res in arpRes)
+            {
+                Console.WriteLine(res);
+            } // end foreach
 
             return reachableMachines;
         } // end method
@@ -28,7 +32,7 @@ namespace LanDiscovery
 
         #region Private Methods
 
-        private string getArpScan()
+        private List<string> getArpScan()
         {
             Process arpProcess = new Process();
             ProcessStartInfo procInfo = new ProcessStartInfo()
@@ -43,11 +47,27 @@ namespace LanDiscovery
             arpProcess.StartInfo = procInfo;
             arpProcess.Start();
 
-            string output = arpProcess.StandardOutput.ReadToEnd();
+            string procOut = "";
+            List<string> arpScanResults = new List<string>();
+            while ((procOut = arpProcess.StandardOutput.ReadLine()) != null)
+            {
+                string[] parts = procOut.Trim().Split(' ');
+
+                if (parts.Length == 0)
+                {
+                    continue;
+                } // end if
+
+                string address = parts[0];
+                if (!String.IsNullOrEmpty(address) && char.IsDigit(address[0]))
+                {
+                    arpScanResults.Add(address);
+                } // end if
+            } // end while
 
             arpProcess.WaitForExit();
 
-            return output;
+            return arpScanResults;
         } // end method
 
         #endregion
