@@ -22,6 +22,13 @@ namespace LanDiscovery
 
             initialiseLanPingers();
             ipAddressBaseSet_m = initialiseIpBase();
+
+            timeout_m = 500;
+        } // end method
+
+        public LanPingerAsync(int timeout) : this()
+        {
+            timeout_m = timeout;
         } // end method
 
         /// <summary>
@@ -34,7 +41,7 @@ namespace LanDiscovery
 
             while (activePingers_m > 0)
             {
-                Thread.Sleep(500);
+                Thread.Sleep(timeout_m);
             } // end while
 
             return activeMachines_m;
@@ -47,7 +54,7 @@ namespace LanDiscovery
         {
             while (activePingers_m > 0)
             {
-                Thread.Sleep(500);
+                Thread.Sleep(timeout_m);
             } // end while
 
             foreach (Ping pinger in lanPingers_m)
@@ -149,6 +156,7 @@ namespace LanDiscovery
         private List<string> activeMachines_m;
         private bool ipAddressBaseSet_m;
         private int activePingers_m;
+        private int timeout_m;
 
         #endregion
 
