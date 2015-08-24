@@ -9,11 +9,6 @@ namespace LanDiscovery
     {
         #region Public Methods
 
-        public ArpScanner()
-        {
-            // default constructor
-        } // end method
-
         public List<string> GetRespondingMachines()
         {
             return getArpScan();

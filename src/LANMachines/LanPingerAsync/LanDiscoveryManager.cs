@@ -8,32 +8,37 @@ namespace LanDiscovery
     {
         #region Public Methods
 
-        public LanDiscoveryManager()
+        public List<string> GetNetworkMachines()
         {
-            
-        }
+            List<string> lanMachinesList = getLanPingResults();
+            List<string> activeMachines = getArpScanResults();
 
-        public void DiscoverNetworkMachines()
+            foreach (string lanIp in lanMachinesList)
+            {
+                if (!activeMachines.Contains(lanIp))
+                {
+                    activeMachines.Add(lanIp);
+                } // end if
+            } // end foreach
+
+            return activeMachines;
+        } // end method
+
+        private List<string> getLanPingResults()
         {
-            List<string> lanMachinesList = new List<string>();
-
             using (lanPinger_m = new LanPingerAsync())
             {
-                foreach (string lanIp in lanPinger_m.GetActiveMachines())
-                {
-                    lanMachinesList.Add(lanIp);
-                }
-            }
+                return lanPinger_m.GetActiveMachines();
+            } // end using
+        } // end method
 
-            arpScanner_m = new ArpScanner();
-            foreach (string lanIp in arpScanner_m.GetRespondingMachines())
+        private List<string> getArpScanResults()
+        {
+            using (arpScanner_m = new ArpScanner())
             {
-                if (!lanMachinesList.Contains(lanIp))
-                {
-                    lanMachinesList.Add(lanIp);
-                }
-            }
-        }
+                return arpScanner_m.GetRespondingMachines();
+            } // end using
+        } // end method
 
         #endregion
 
@@ -43,5 +48,5 @@ namespace LanDiscovery
         private ArpScanner arpScanner_m;
 
         #endregion
-    }
-}
+    } // end class
+} // end namespace
