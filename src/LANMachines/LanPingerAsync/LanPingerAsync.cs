@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.NetworkInformation;
-using System.Text;
 using System.Threading;
 
 namespace LanDiscovery

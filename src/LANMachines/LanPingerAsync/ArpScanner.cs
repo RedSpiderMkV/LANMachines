@@ -1,19 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 
 namespace LanDiscovery
 {
+    /// <summary>
+    /// Identify all network machines which respond to an arp request.
+    /// </summary>
     internal class ArpScanner : IDisposable
     {
         #region Public Methods
 
+        /// <summary>
+        /// Get all machines which respond to the arp request.
+        /// </summary>
+        /// <returns>List of responding machines.</returns>
         public List<string> GetRespondingMachines()
         {
             return getArpScan();
         } // end method
 
+        /// <summary>
+        /// Dispose of the arp runner process.
+        /// </summary>
         public void Dispose()
         {
             if (arpProcess_m != null)
@@ -26,6 +35,9 @@ namespace LanDiscovery
 
         #region Private Methods
 
+        /// <summary>
+        /// Initialise the arp scanner process.
+        /// </summary>
         private void initialiseArpScanProc()
         {
             arpProcess_m = new Process();
@@ -42,6 +54,10 @@ namespace LanDiscovery
             arpProcess_m.Start();
         } // end method
 
+        /// <summary>
+        /// Get the arp scan responding machines.
+        /// </summary>
+        /// <returns></returns>
         private List<string> getArpScan()
         {
             initialiseArpScanProc();
@@ -73,6 +89,7 @@ namespace LanDiscovery
 
         #region Private Data
 
+        // Arp command runner process.
         private Process arpProcess_m;
 
         #endregion
