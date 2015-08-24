@@ -12,16 +12,24 @@ namespace LanMachines
         internal static void Main(string[] args)
         {
             ArpScanner scanner = new ArpScanner();
+            List<string> activeAddresses = new List<string>();
             foreach (string s in scanner.GetRespondingMachines())
             {
-                Console.WriteLine(s);
+                activeAddresses.Add(s);
             } // end foreach
 
-            return;
+            //return;
 
             using (LanPingerAsync asyncPinger = new LanPingerAsync())
             {
-                List<string> activeAddresses = asyncPinger.GetActiveMachines();
+                List<string> lanPings = asyncPinger.GetActiveMachines();
+                foreach (string pings in lanPings)
+                {
+                    if (!activeAddresses.Contains(pings))
+                    {
+                        activeAddresses.Add(pings);
+                    }
+                }
 
                 foreach (string address in activeAddresses)
                 {
