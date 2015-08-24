@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LanDiscovery
 {
-    internal class ArpScanner
+    internal class ArpScanner : IDisposable
     {
         #region Public Methods
 
@@ -17,6 +17,14 @@ namespace LanDiscovery
         public List<string> GetRespondingMachines()
         {
             return getArpScan();
+        } // end method
+
+        public void Dispose()
+        {
+            if (arpProcess_m != null)
+            {
+                arpProcess_m.Dispose();
+            } // end if
         } // end method
 
         #endregion
