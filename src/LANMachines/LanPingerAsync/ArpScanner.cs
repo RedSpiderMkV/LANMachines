@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LanDiscovery
 {
-    public class ArpScanner
+    internal class ArpScanner
     {
         #region Public Methods
 

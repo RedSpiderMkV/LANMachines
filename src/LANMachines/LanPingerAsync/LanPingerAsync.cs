@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace LanDiscovery
 {
-    public class LanPingerAsync : IDisposable
+    internal class LanPingerAsync : IDisposable
     {
         #region Public Methods
 
