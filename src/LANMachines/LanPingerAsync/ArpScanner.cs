@@ -52,7 +52,7 @@ namespace LanDiscovery
             {
                 string[] parts = procOut.Trim().Split(' ');
 
-                if (parts.Length == 0)
+                if (parts.Length < 2 || parts[parts.Length - 1] == "invalid")
                 {
                     continue;
                 } // end if

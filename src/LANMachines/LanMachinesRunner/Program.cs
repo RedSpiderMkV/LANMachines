@@ -11,31 +11,13 @@ namespace LanMachines
     {
         internal static void Main(string[] args)
         {
-            //ArpScanner scanner = new ArpScanner();
-            //List<string> activeAddresses = new List<string>();
-            //foreach (string s in scanner.GetRespondingMachines())
-            //{
-            //    activeAddresses.Add(s);
-            //} // end foreach
+            LanDiscoveryManager lanDiscovery = new LanDiscoveryManager();
+            List<string> lanMachines = lanDiscovery.GetNetworkMachines();
 
-            ////return;
-
-            //using (LanPingerAsync asyncPinger = new LanPingerAsync())
-            //{
-            //    List<string> lanPings = asyncPinger.GetActiveMachines();
-            //    foreach (string pings in lanPings)
-            //    {
-            //        if (!activeAddresses.Contains(pings))
-            //        {
-            //            activeAddresses.Add(pings);
-            //        }
-            //    }
-
-            //    foreach (string address in activeAddresses)
-            //    {
-            //        Console.WriteLine(address);
-            //    }
-            //} // end using
+            foreach (string lanIp in lanMachines)
+            {
+                Console.WriteLine(lanIp);
+            }
 
             Console.WriteLine("LAN ping complete");
             Console.ReadKey();
