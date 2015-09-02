@@ -70,5 +70,6 @@ namespace LanDiscovery
         private ArpScanner arpScanner_m;
 
         #endregion
+
     } // end class
 } // end namespace

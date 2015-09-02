@@ -73,7 +73,7 @@ namespace LanDiscovery
         {
             foreach (Ping ping in lanPingers_m)
             {
-                ping.SendAsync(ipAddressBase_m + activePingers_m.ToString(), 500, null);
+                ping.SendAsync(ipAddressBase_m + activePingers_m.ToString(), timeout_m, null);
                 activePingers_m++;
             } // end foreach
         } // end method
@@ -138,7 +138,6 @@ namespace LanDiscovery
         {
             if (e.Reply.Status == IPStatus.Success)
             {
-                //Console.WriteLine(e.Reply.Address.ToString());
                 activeMachines_m.Add(e.Reply.Address.ToString());
             } // end if
 
