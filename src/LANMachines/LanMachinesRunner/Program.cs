@@ -14,7 +14,7 @@ namespace LanMachines
 
             printStringList(lanMachines);
 
-            Console.WriteLine("LAN ping complete");
+            Console.WriteLine("LAN discovery complete.");
             Console.ReadKey();
         } // end method
 
