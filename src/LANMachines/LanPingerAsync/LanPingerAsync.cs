@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using System.Net.NetworkInformation;
 using System.Threading;
 
@@ -35,6 +36,11 @@ namespace LanDiscovery
         /// <returns>List of IP reachable addresses.</returns>
         public List<string> GetActiveMachines()
         {
+            if (!ipAddressBaseSet_m)
+            {
+                return null;
+            } // end if
+
             pingAllAsync();
 
             while (activePingers_m > 0)
@@ -85,14 +91,25 @@ namespace LanDiscovery
         private bool initialiseIpBase()
         {
             NetworkInterface[] networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+            NetworkInterface networkInterface = null;
 
-            if (networkInterfaces == null)
+            foreach (NetworkInterface ni in networkInterfaces)
+            {
+                // TODO: Bluetooth dongle appears to match this if active...
+                if (ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet && ni.OperationalStatus == OperationalStatus.Up)
+                {
+                    networkInterface = ni;
+                    break;
+                } // end if
+            } // end foreach
+
+            if (networkInterface == null)
             {
                 ipAddressBase_m = null;
             }
             else
             {
-                GatewayIPAddressInformationCollection gateWayAddresses = networkInterfaces[0].GetIPProperties().GatewayAddresses;
+                GatewayIPAddressInformationCollection gateWayAddresses = networkInterface.GetIPProperties().GatewayAddresses;
 
                 if (gateWayAddresses != null && gateWayAddresses.Count > 0)
                 {

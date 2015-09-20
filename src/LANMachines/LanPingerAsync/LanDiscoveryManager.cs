@@ -44,6 +44,12 @@ namespace LanDiscovery
         {
             using (lanPinger_m = new LanPingerAsync())
             {
+                List<string> respondingIpAddresses = lanPinger_m.GetActiveMachines();
+                if (respondingIpAddresses == null)
+                {
+                    return new List<string>();
+                } // end if
+
                 return lanPinger_m.GetActiveMachines();
             } // end using
         } // end method
