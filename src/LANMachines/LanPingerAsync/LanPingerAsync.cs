@@ -85,23 +85,30 @@ namespace LanDiscovery
         } // end method
 
         /// <summary>
+        /// Get the active ethernet network interface.
+        /// </summary>
+        /// <returns>Active ethernet network interface.</returns>
+        private NetworkInterface getActiveEthernetInterface()
+        {
+            foreach (NetworkInterface networkInterface in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                // TODO: Bluetooth dongle appears to match this if active...
+                if (networkInterface.NetworkInterfaceType == NetworkInterfaceType.Ethernet && networkInterface.OperationalStatus == OperationalStatus.Up)
+                {
+                    return networkInterface;
+                } // end if
+            } // end foreach
+
+            return null;
+        } // end method
+
+        /// <summary>
         /// Initialise the base IP address by determining what the gateway address is.
         /// </summary>
         /// <returns>True if address was initialised.</returns>
         private bool initialiseIpBase()
         {
-            NetworkInterface[] networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
-            NetworkInterface networkInterface = null;
-
-            foreach (NetworkInterface ni in networkInterfaces)
-            {
-                // TODO: Bluetooth dongle appears to match this if active...
-                if (ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet && ni.OperationalStatus == OperationalStatus.Up)
-                {
-                    networkInterface = ni;
-                    break;
-                } // end if
-            } // end foreach
+            NetworkInterface networkInterface = getActiveEthernetInterface();
 
             if (networkInterface == null)
             {
