@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading;
 
@@ -16,7 +17,7 @@ namespace LanDiscovery
         public LanPingerAsync()
         {
             activePingers_m = 0;
-            activeMachines_m = new List<string>();
+            activeMachines_m = new List<IPAddress>();
 
             initialiseLanPingers();
             ipAddressBaseSet_m = initialiseIpBase();
@@ -33,7 +34,7 @@ namespace LanDiscovery
         /// Get a list of IP addresses which responded to the ping.
         /// </summary>
         /// <returns>List of IP reachable addresses.</returns>
-        public List<string> GetActiveMachines()
+        public List<IPAddress> GetActiveMachineAddresses()
         {
             if (!ipAddressBaseSet_m)
             {
@@ -161,7 +162,7 @@ namespace LanDiscovery
         {
             if (e.Reply.Status == IPStatus.Success)
             {
-                activeMachines_m.Add(e.Reply.Address.ToString());
+                activeMachines_m.Add(e.Reply.Address);
             } // end if
 
             activePingers_m--;
@@ -173,7 +174,7 @@ namespace LanDiscovery
 
         private string ipAddressBase_m;
         private List<Ping> lanPingers_m;
-        private List<string> activeMachines_m;
+        private List<IPAddress> activeMachines_m;
         private bool ipAddressBaseSet_m;
         private int activePingers_m;
         private int timeout_m;

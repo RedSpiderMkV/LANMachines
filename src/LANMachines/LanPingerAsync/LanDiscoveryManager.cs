@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 
 namespace LanDiscovery
@@ -16,12 +17,12 @@ namespace LanDiscovery
         /// Retrieve a list of network machines.
         /// </summary>
         /// <returns>List of network IP addresses.</returns>
-        public List<string> GetNetworkMachines()
+        public List<IPAddress> GetNetworkMachines()
         {
-            List<string> lanMachinesList = getLanPingResults();
-            List<string> activeMachines = getArpScanResults();
+            List<IPAddress> lanMachinesList = getLanPingResults();
+            List<IPAddress> activeMachines = getArpScanResults();
 
-            foreach (string lanIp in lanMachinesList)
+            foreach (IPAddress lanIp in lanMachinesList)
             {
                 if (!activeMachines.Contains(lanIp))
                 {
@@ -40,17 +41,17 @@ namespace LanDiscovery
         /// Get the list of machines which responded to the lan ping test.
         /// </summary>
         /// <returns>List of lan ping responding.</returns>
-        private List<string> getLanPingResults()
+        private List<IPAddress> getLanPingResults()
         {
             using (lanPinger_m = new LanPingerAsync())
             {
-                List<string> respondingIpAddresses = lanPinger_m.GetActiveMachines();
+                List<IPAddress> respondingIpAddresses = lanPinger_m.GetActiveMachineAddresses();
                 if (respondingIpAddresses == null)
                 {
-                    return new List<string>();
+                    return new List<IPAddress>();
                 } // end if
 
-                return lanPinger_m.GetActiveMachines();
+                return lanPinger_m.GetActiveMachineAddresses();
             } // end using
         } // end method
 
@@ -58,7 +59,7 @@ namespace LanDiscovery
         /// Get the list of machines which responded to the arp request.
         /// </summary>
         /// <returns>List of arp responders.</returns>
-        private List<string> getArpScanResults()
+        private List<IPAddress> getArpScanResults()
         {
             using (arpScanner_m = new ArpScanner())
             {

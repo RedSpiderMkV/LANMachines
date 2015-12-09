@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 
 using LanDiscovery;
 
@@ -10,7 +11,7 @@ namespace LanMachines
         internal static void Main(string[] args)
         {
             LanDiscoveryManager lanDiscovery = new LanDiscoveryManager();
-            List<string> lanMachines = lanDiscovery.GetNetworkMachines();
+            List<IPAddress> lanMachines = lanDiscovery.GetNetworkMachines();
 
             printStringList(lanMachines);
 
@@ -18,11 +19,11 @@ namespace LanMachines
             Console.ReadKey();
         } // end method
 
-        private static void printStringList(List<string> stringList)
+        private static void printStringList(List<IPAddress> ipAddressList)
         {
-            foreach (string s in stringList)
+            foreach (IPAddress address in ipAddressList)
             {
-                Console.WriteLine(s);
+                Console.WriteLine(address.ToString());
             } // end foreach
         } // end method
 
