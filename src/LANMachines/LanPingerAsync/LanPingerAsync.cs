@@ -110,11 +110,7 @@ namespace LanDiscovery
         {
             NetworkInterface networkInterface = getActiveEthernetInterface();
 
-            if (networkInterface == null)
-            {
-                ipAddressBase_m = null;
-            }
-            else
+            if (networkInterface != null)
             {
                 GatewayIPAddressInformationCollection gateWayAddresses = networkInterface.GetIPProperties().GatewayAddresses;
 

@@ -16,7 +16,7 @@ namespace LanMachines
             printStringList(lanMachines);
 
             Console.WriteLine("LAN discovery complete.");
-            Console.WriteLine("Press any key to exit.");
+            Console.WriteLine("Press any key to EXIT...");
             Console.ReadKey();
         } // end method
 
