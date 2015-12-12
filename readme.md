@@ -19,6 +19,8 @@ List<IPAddress> lanMachines = lanDiscovery.GetNetworkMachines();
 Example Output
 --------------
 
+Example output running in a console
+
 ![run image](./assets/lanConsoleRun.PNG "Example Run")
 
 [Based on this nice and useful stackoverflow post](http://stackoverflow.com/questions/4042789/how-to-get-ip-of-all-hosts-in-lan)
