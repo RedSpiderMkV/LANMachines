@@ -10,13 +10,20 @@ namespace LanMachines
     {
         internal static void Main(string[] args)
         {
+            Console.Title = "LAN Discovery Runner";
+            Console.WriteLine("LAN Discovery Test Console v0.2");
+            Console.WriteLine();
+
             LanDiscoveryManager lanDiscovery = new LanDiscoveryManager();
             List<IPAddress> lanMachines = lanDiscovery.GetNetworkMachines();
 
+            Console.WriteLine("Following IP addresses found on network:");
             printStringList(lanMachines);
 
+            Console.WriteLine();
             Console.WriteLine("LAN discovery complete.");
             Console.WriteLine("Press any key to EXIT...");
+            
             Console.ReadKey();
         } // end method
 
