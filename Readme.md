@@ -23,6 +23,6 @@ Example output running in a console
 
 ![run image](./assets/lanConsoleRun.PNG "Example Run")
 
-For a full usage example, please see [this file](https://github.com/RedSpiderMkV/LANMachines/blob/master/src/LANMachines/LanMachinesRunner/Program.cs)
+For a full usage example, please see [this file for blocking mode operation](https://github.com/RedSpiderMkV/LANMachines/blob/master/src/LANMachines/LanMachinesRunner/LanDiscoveryBlocking.cs)
 
 [Based on this nice and useful stackoverflow post](http://stackoverflow.com/questions/4042789/how-to-get-ip-of-all-hosts-in-lan)
