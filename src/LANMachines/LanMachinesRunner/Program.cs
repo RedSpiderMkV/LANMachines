@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net;
-
-using LanDiscovery;
 
 namespace LanMachines
 {
@@ -10,29 +6,10 @@ namespace LanMachines
     {
         internal static void Main(string[] args)
         {
-            Console.Title = "LAN Discovery Runner";
-            Console.WriteLine("LAN Discovery Test Console v0.2");
-            Console.WriteLine();
+            LanDiscoveryBlocking.DiscoverLanMachines();
 
-            LanDiscoveryManager lanDiscovery = new LanDiscoveryManager();
-            List<IPAddress> lanMachines = lanDiscovery.GetNetworkMachines();
-
-            Console.WriteLine("Following IP addresses found on network:");
-            printStringList(lanMachines);
-
-            Console.WriteLine();
-            Console.WriteLine("LAN discovery complete.");
             Console.WriteLine("Press any key to EXIT...");
-            
             Console.ReadKey();
-        } // end method
-
-        private static void printStringList(List<IPAddress> ipAddressList)
-        {
-            foreach (IPAddress address in ipAddressList)
-            {
-                Console.WriteLine(address.ToString());
-            } // end foreach
         } // end method
     } // end class
 } // end namespace
