@@ -4,7 +4,7 @@ using System.Net;
 
 namespace LanDiscovery
 {
-    private class IPAddressComparer : IComparer<IPAddress>
+    internal class IPAddressComparer : IComparer<IPAddress>
     {
         public int Compare(IPAddress x, IPAddress y)
         {
