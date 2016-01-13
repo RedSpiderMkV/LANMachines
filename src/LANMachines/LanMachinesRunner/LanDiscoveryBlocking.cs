@@ -18,13 +18,13 @@ namespace LanMachines
             List<IPAddress> lanMachines = lanDiscovery.GetNetworkMachines();
 
             Console.WriteLine("Following IP addresses found on network:");
-            printStringList(lanMachines);
+            printDiscoveredAddresses(lanMachines);
 
             Console.WriteLine();
             Console.WriteLine("LAN discovery complete.");
         } // end method
 
-        private static void printStringList(List<IPAddress> ipAddressList)
+        private static void printDiscoveredAddresses(List<IPAddress> ipAddressList)
         {
             foreach (IPAddress address in ipAddressList)
             {
