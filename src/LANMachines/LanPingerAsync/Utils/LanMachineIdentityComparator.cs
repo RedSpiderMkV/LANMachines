@@ -4,10 +4,13 @@ using System.Net;
 
 namespace LanDiscovery
 {
-    internal class IPAddressComparer : IComparer<IPAddress>
+    internal class LanMachineIdentityComparator : IComparer<LanMachine>
     {
-        public int Compare(IPAddress x, IPAddress y)
+        public int Compare(LanMachine m1, LanMachine m2)
         {
+            IPAddress x = m1.MachineIPAddress;
+            IPAddress y = m2.MachineIPAddress;
+
             byte[] xBytes = x.GetAddressBytes();
             byte[] yBytes = y.GetAddressBytes();
 
