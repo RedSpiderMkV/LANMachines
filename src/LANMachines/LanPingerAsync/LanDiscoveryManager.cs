@@ -32,6 +32,19 @@ namespace LanDiscovery
 
             activeMachines.Sort(new IPAddressComparer());
 
+            foreach (IPAddress address in activeMachines)
+            {
+                try
+                {
+                    IPHostEntry entry = Dns.GetHostEntry(address);
+                    Console.WriteLine(entry.HostName);
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Unable to find host name: " + address.ToString());
+                } // end try-catch
+            }
+
             return activeMachines;
         } // end method
 

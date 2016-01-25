@@ -38,7 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArpScanner.cs" />
-    <Compile Include="IPAddressComparer.cs" />
+    <Compile Include="Utils\IPAddressComparer.cs" />
     <Compile Include="LanDiscoveryManager.cs" />
     <Compile Include="LanPingerAsync.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
