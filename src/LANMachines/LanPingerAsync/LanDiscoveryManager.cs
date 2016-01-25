@@ -17,7 +17,7 @@ namespace LanDiscovery
         /// Retrieve a list of network machines.
         /// </summary>
         /// <returns>List of network IP addresses.</returns>
-        public List<IPAddress> GetNetworkMachines()
+        public List<LanMachine> GetNetworkMachines()
         {
             List<IPAddress> lanMachinesList = getLanPingResults();
             List<IPAddress> activeMachines = getArpScanResults();
@@ -32,25 +32,33 @@ namespace LanDiscovery
 
             activeMachines.Sort(new IPAddressComparer());
 
+            List<LanMachine> lanMachines = new List<LanMachine>();
             foreach (IPAddress address in activeMachines)
             {
+                string machineName = "";
+                IPHostEntry entry;
+
                 try
                 {
-                    IPHostEntry entry = Dns.GetHostEntry(address);
-                    Console.WriteLine(entry.HostName);
+                    entry = Dns.GetHostEntry(address);
+                    machineName = entry.HostName;
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("Unable to find host name: " + address.ToString());
+                    //Console.WriteLine("Unable to find host name: " + address.ToString());
                 } // end try-catch
+
+                lanMachines.Add(new LanMachine(address, machineName));
             }
 
-            return activeMachines;
+            return lanMachines;
         } // end method
 
         #endregion
 
         #region Private Methods
+
+        
 
         /// <summary>
         /// Get the list of machines which responded to the lan ping test.

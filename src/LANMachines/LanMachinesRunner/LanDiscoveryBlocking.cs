@@ -11,11 +11,11 @@ namespace LanMachines
         public static void DiscoverLanMachines()
         {
             Console.Title = "LAN Discovery Runner";
-            Console.WriteLine("LAN Discovery Test Console v0.2");
+            Console.WriteLine("LAN Discovery Test Console v0.3");
             Console.WriteLine();
 
             LanDiscoveryManager lanDiscovery = new LanDiscoveryManager();
-            List<IPAddress> lanMachines = lanDiscovery.GetNetworkMachines();
+            List<LanMachine> lanMachines = lanDiscovery.GetNetworkMachines();
 
             Console.WriteLine("Following IP addresses found on network:");
             printDiscoveredAddresses(lanMachines);
@@ -24,11 +24,11 @@ namespace LanMachines
             Console.WriteLine("LAN discovery complete.");
         } // end method
 
-        private static void printDiscoveredAddresses(List<IPAddress> ipAddressList)
+        private static void printDiscoveredAddresses(List<LanDiscovery.LanMachine> lanMachines)
         {
-            foreach (IPAddress address in ipAddressList)
+            foreach (LanMachine machines in lanMachines)
             {
-                Console.WriteLine(address.ToString());
+                Console.WriteLine(machines.MachineIPAddress + " " + machines.MachineName);
             } // end foreach
         } // end method
     } // end class
