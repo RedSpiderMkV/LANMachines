@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-
-using LanDiscovery;
 
 namespace LanMachines
 {
@@ -9,22 +6,10 @@ namespace LanMachines
     {
         internal static void Main(string[] args)
         {
-            LanDiscoveryManager lanDiscovery = new LanDiscoveryManager();
-            List<string> lanMachines = lanDiscovery.GetNetworkMachines();
+            LanDiscoveryBlocking.DiscoverLanMachines();
 
-            printStringList(lanMachines);
-
-            Console.WriteLine("LAN discovery complete.");
+            Console.WriteLine("Press any key to EXIT...");
             Console.ReadKey();
         } // end method
-
-        private static void printStringList(List<string> stringList)
-        {
-            foreach (string s in stringList)
-            {
-                Console.WriteLine(s);
-            } // end foreach
-        } // end method
-
     } // end class
 } // end namespace

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 
 namespace LanDiscovery
@@ -16,20 +17,14 @@ namespace LanDiscovery
         /// Retrieve a list of network machines.
         /// </summary>
         /// <returns>List of network IP addresses.</returns>
-        public List<string> GetNetworkMachines()
+        public List<LanMachine> GetNetworkMachines()
         {
-            List<string> lanMachinesList = getLanPingResults();
-            List<string> activeMachines = getArpScanResults();
+            List<IPAddress> uniqueMachineAddresses = getUniqueIpAddresses();
+            List<LanMachine> lanMachines = getLanMachinesFromIpAddresses(uniqueMachineAddresses);
 
-            foreach (string lanIp in lanMachinesList)
-            {
-                if (!activeMachines.Contains(lanIp))
-                {
-                    activeMachines.Add(lanIp);
-                } // end if
-            } // end foreach
+            lanMachines.Sort(new LanMachineIdentityComparator());
 
-            return activeMachines;
+            return lanMachines;
         } // end method
 
         #endregion
@@ -37,20 +32,73 @@ namespace LanDiscovery
         #region Private Methods
 
         /// <summary>
+        /// Retrieve a list of unique IP addresses detected on the LAN.
+        /// </summary>
+        /// <returns>List of unique IP addresses.</returns>
+        private List<IPAddress> getUniqueIpAddresses()
+        {
+            List<IPAddress> pingResponders = getLanPingResults();
+            List<IPAddress> arpResponders = getArpScanResults();
+
+            List<IPAddress> uniqueMachineAddresses = pingResponders;
+            foreach (IPAddress lanIp in arpResponders)
+            {
+                if (!uniqueMachineAddresses.Contains(lanIp))
+                {
+                    uniqueMachineAddresses.Add(lanIp);
+                } // end if
+            } // end foreach
+
+            return uniqueMachineAddresses;
+        } // end method
+
+        /// <summary>
+        /// Retrieve a list of LanMachine objects (IP address and machine name)
+        /// from a list of IP addresses.
+        /// </summary>
+        /// <param name="ipAddresses">Machine IP addresses.</param>
+        /// <returns>Lan machines.</returns>
+        private List<LanMachine> getLanMachinesFromIpAddresses(List<IPAddress> ipAddresses)
+        {
+            List<LanMachine> lanMachines = new List<LanMachine>();
+
+            string machineName;
+            IPHostEntry entry;
+
+            foreach (IPAddress address in ipAddresses)
+            {
+                try
+                {
+                    entry = Dns.GetHostEntry(address);
+                    machineName = entry.HostName;
+                }
+                catch (Exception)
+                {
+                    // Console.WriteLine("Unable to find host name: " + address.ToString());
+                    machineName = String.Empty;
+                } // end try-catch
+
+                lanMachines.Add(new LanMachine(address, machineName));
+            } // end foreach
+
+            return lanMachines;
+        } // end method
+
+        /// <summary>
         /// Get the list of machines which responded to the lan ping test.
         /// </summary>
         /// <returns>List of lan ping responding.</returns>
-        private List<string> getLanPingResults()
+        private List<IPAddress> getLanPingResults()
         {
             using (lanPinger_m = new LanPingerAsync())
             {
-                List<string> respondingIpAddresses = lanPinger_m.GetActiveMachines();
+                List<IPAddress> respondingIpAddresses = lanPinger_m.GetActiveMachineAddresses();
                 if (respondingIpAddresses == null)
                 {
-                    return new List<string>();
+                    return new List<IPAddress>();
                 } // end if
 
-                return lanPinger_m.GetActiveMachines();
+                return respondingIpAddresses;
             } // end using
         } // end method
 
@@ -58,7 +106,7 @@ namespace LanDiscovery
         /// Get the list of machines which responded to the arp request.
         /// </summary>
         /// <returns>List of arp responders.</returns>
-        private List<string> getArpScanResults()
+        private List<IPAddress> getArpScanResults()
         {
             using (arpScanner_m = new ArpScanner())
             {

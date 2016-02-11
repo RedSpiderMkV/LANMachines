@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 
 namespace LanDiscovery
 {
@@ -15,7 +16,7 @@ namespace LanDiscovery
         /// Get all machines which respond to the arp request.
         /// </summary>
         /// <returns>List of responding machines.</returns>
-        public List<string> GetRespondingMachines()
+        public List<IPAddress> GetRespondingMachines()
         {
             return getArpScan();
         } // end method
@@ -57,13 +58,13 @@ namespace LanDiscovery
         /// <summary>
         /// Get the arp scan responding machines.
         /// </summary>
-        /// <returns></returns>
-        private List<string> getArpScan()
+        /// <returns>List of IP addresses which respond to the ARP command.</returns>
+        private List<IPAddress> getArpScan()
         {
             initialiseArpScanProc();
 
             string procOut = "";
-            List<string> arpScanResults = new List<string>();
+            List<IPAddress> arpScanResults = new List<IPAddress>();
             while ((procOut = arpProcess_m.StandardOutput.ReadLine()) != null)
             {
                 string[] parts = procOut.Trim().Split(' ');
@@ -74,9 +75,10 @@ namespace LanDiscovery
                 } // end if
 
                 string address = parts[0];
-                if (!String.IsNullOrEmpty(address) && char.IsDigit(address[0]))
+                IPAddress ipAddress;
+                if (!String.IsNullOrEmpty(address) && char.IsDigit(address[0]) && IPAddress.TryParse(address, out ipAddress))
                 {
-                    arpScanResults.Add(address);
+                    arpScanResults.Add(ipAddress);
                 } // end if
             } // end while
 

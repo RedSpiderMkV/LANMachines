@@ -38,6 +38,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArpScanner.cs" />
+    <Compile Include="LanMachine.cs" />
+    <Compile Include="Utils\LanMachineIdentityComparator.cs" />
     <Compile Include="LanDiscoveryManager.cs" />
     <Compile Include="LanPingerAsync.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
