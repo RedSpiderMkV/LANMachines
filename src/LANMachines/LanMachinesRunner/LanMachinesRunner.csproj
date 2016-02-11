@@ -47,8 +47,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LanPingerAsync\LanDiscovery.csproj">
-      <Project>{DBDE29C5-DFD5-44C5-82F3-95AA9C5751DB}</Project>
+    <ProjectReference Include="..\LanDiscovery\LanDiscovery.csproj">
+      <Project>{dbde29c5-dfd5-44c5-82f3-95aa9c5751db}</Project>
       <Name>LanDiscovery</Name>
     </ProjectReference>
   </ItemGroup>
