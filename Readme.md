@@ -1,6 +1,8 @@
 LANMachines
 ===========
 
+ [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/RedSpiderMkV/LANMachines/blob/master/LICENSE)
+
 Library to find all machines on your local network.
 Machines have to be pingable.
 
