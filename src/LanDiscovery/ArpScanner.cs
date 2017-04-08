@@ -18,7 +18,30 @@ namespace LanDiscovery
         /// <returns>List of responding machines.</returns>
         public List<IPAddress> GetRespondingMachines()
         {
-            return getArpScan();
+            initialiseArpScanProc();
+
+            string procOut = "";
+            List<IPAddress> arpScanResults = new List<IPAddress>();
+            while ((procOut = arpProcess_m.StandardOutput.ReadLine()) != null)
+            {
+                string[] parts = procOut.Trim().Split(' ');
+
+                if (parts.Length < 2 || parts[parts.Length - 1] == "invalid")
+                {
+                    continue;
+                } // end if
+
+                string address = parts[0];
+                IPAddress ipAddress;
+                if (!String.IsNullOrEmpty(address) && char.IsDigit(address[0]) && IPAddress.TryParse(address, out ipAddress))
+                {
+                    arpScanResults.Add(ipAddress);
+                } // end if
+            } // end while
+
+            arpProcess_m.WaitForExit();
+
+            return arpScanResults;
         } // end method
 
         /// <summary>
@@ -53,38 +76,6 @@ namespace LanDiscovery
 
             arpProcess_m.StartInfo = procInfo;
             arpProcess_m.Start();
-        } // end method
-
-        /// <summary>
-        /// Get the arp scan responding machines.
-        /// </summary>
-        /// <returns>List of IP addresses which respond to the ARP command.</returns>
-        private List<IPAddress> getArpScan()
-        {
-            initialiseArpScanProc();
-
-            string procOut = "";
-            List<IPAddress> arpScanResults = new List<IPAddress>();
-            while ((procOut = arpProcess_m.StandardOutput.ReadLine()) != null)
-            {
-                string[] parts = procOut.Trim().Split(' ');
-
-                if (parts.Length < 2 || parts[parts.Length - 1] == "invalid")
-                {
-                    continue;
-                } // end if
-
-                string address = parts[0];
-                IPAddress ipAddress;
-                if (!String.IsNullOrEmpty(address) && char.IsDigit(address[0]) && IPAddress.TryParse(address, out ipAddress))
-                {
-                    arpScanResults.Add(ipAddress);
-                } // end if
-            } // end while
-
-            arpProcess_m.WaitForExit();
-
-            return arpScanResults;
         } // end method
 
         #endregion

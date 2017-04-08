@@ -13,6 +13,11 @@ namespace LanDiscovery
     {
         #region Public Methods
 
+        public LanDiscoveryManager()
+        {
+            comparator_m = new LanMachineIdentityComparator();
+        } // end method
+
         /// <summary>
         /// Retrieve a list of network machines.
         /// </summary>
@@ -22,7 +27,7 @@ namespace LanDiscovery
             List<IPAddress> uniqueMachineAddresses = getUniqueIpAddresses();
             List<LanMachine> lanMachines = getLanMachinesFromIpAddresses(uniqueMachineAddresses);
 
-            lanMachines.Sort(new LanMachineIdentityComparator());
+            lanMachines.Sort(comparator_m);
 
             return lanMachines;
         } // end method
@@ -122,6 +127,8 @@ namespace LanDiscovery
         private LanPingerAsync lanPinger_m;
         // Arp request handler.
         private ArpScanner arpScanner_m;
+
+        private readonly IComparer<LanMachine> comparator_m;
 
         #endregion
 
