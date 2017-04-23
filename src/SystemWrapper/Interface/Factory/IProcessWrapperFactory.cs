@@ -1,5 +1,5 @@
 ﻿
-namespace SystemWrapper.Interface.Factory
+namespace RedSpider.SystemWrapper.Interface.Factory
 {
     /// <summary>
     /// Interface to the ProcessWrapperFactory - used to generate new instances of <see cref="IProcessWrapper"/>.

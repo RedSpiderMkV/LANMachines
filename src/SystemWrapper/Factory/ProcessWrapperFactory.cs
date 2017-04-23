@@ -1,8 +1,8 @@
-﻿using SystemWrapper.Interface;
-using SystemWrapper.Interface.Factory;
-using SystemWrapper.Wrapper;
+﻿using RedSpider.SystemWrapper.Interface;
+using RedSpider.SystemWrapper.Interface.Factory;
+using RedSpider.SystemWrapper.Wrapper;
 
-namespace SystemWrapper.Factory
+namespace RedSpider.SystemWrapper.Factory
 {
     /// <summary>
     /// ProcessWrapperFactory - used to generate new instances of <see cref="IProcessWrapper"/>.

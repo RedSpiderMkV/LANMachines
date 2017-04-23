@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading;
 
-namespace LanDiscovery
+namespace RedSpider.LanDiscovery
 {
     internal class LanPingerAsync : IDisposable
     {

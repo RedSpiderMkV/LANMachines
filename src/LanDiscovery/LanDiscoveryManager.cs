@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using SystemWrapper.Factory;
-using SystemWrapper.Interface.Factory;
+using RedSpider.SystemWrapper.Factory;
+using RedSpider.SystemWrapper.Interface.Factory;
 
-namespace LanDiscovery
+namespace RedSpider.LanDiscovery
 {
     /// <summary>
     /// Lan discovery manager - identifies lan machines

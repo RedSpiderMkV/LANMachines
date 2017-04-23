@@ -54,9 +54,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SystemWrapper\SystemWrapper.csproj">
+    <ProjectReference Include="..\SystemWrapper\RedSpider.SystemWrapper.csproj">
       <Project>{69fa7292-d7b7-4416-a94b-1a19155f587a}</Project>
-      <Name>SystemWrapper</Name>
+      <Name>RedSpider.SystemWrapper</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

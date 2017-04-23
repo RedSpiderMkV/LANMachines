@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 
-namespace LanDiscovery
+namespace RedSpider.LanDiscovery
 {
     internal class LanMachineIdentityComparator : IComparer<LanMachine>
     {

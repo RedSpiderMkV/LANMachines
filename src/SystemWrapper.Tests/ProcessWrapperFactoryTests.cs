@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SystemWrapper.Factory;
-using SystemWrapper.Interface;
-using SystemWrapper.Wrapper;
+using RedSpider.SystemWrapper.Factory;
+using RedSpider.SystemWrapper.Interface;
+using RedSpider.SystemWrapper.Wrapper;
 
-namespace SystemWrapper.Tests
+namespace RedSpider.SystemWrapper.Tests
 {
     /// <summary>
     /// Test class to the ProcessWrapperFactory.

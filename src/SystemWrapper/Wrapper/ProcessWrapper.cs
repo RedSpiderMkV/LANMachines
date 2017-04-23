@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using System.IO;
-using SystemWrapper.Interface;
+using RedSpider.SystemWrapper.Interface;
 
-namespace SystemWrapper.Wrapper
+namespace RedSpider.SystemWrapper.Wrapper
 {
     public class ProcessWrapper : IProcessWrapper
     {

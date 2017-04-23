@@ -5,9 +5,9 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanMachinesRunner", "LanMachinesRunner\LanMachinesRunner.csproj", "{D2DBFA40-F4A0-4C23-BFEC-B8AD467C46C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanDiscovery", "LanDiscovery\LanDiscovery.csproj", "{DBDE29C5-DFD5-44C5-82F3-95AA9C5751DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedSpider.LanDiscovery", "LanDiscovery\RedSpider.LanDiscovery.csproj", "{DBDE29C5-DFD5-44C5-82F3-95AA9C5751DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemWrapper", "SystemWrapper\SystemWrapper.csproj", "{69FA7292-D7B7-4416-A94B-1A19155F587A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedSpider.SystemWrapper", "SystemWrapper\RedSpider.SystemWrapper.csproj", "{69FA7292-D7B7-4416-A94B-1A19155F587A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemWrapper.Tests", "SystemWrapper.Tests\SystemWrapper.Tests.csproj", "{BBFFF396-634C-4CDB-A160-D9DA360A54E7}"
 EndProject

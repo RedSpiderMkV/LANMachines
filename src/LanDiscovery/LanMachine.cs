@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace LanDiscovery
+namespace RedSpider.LanDiscovery
 {
     /// <summary>
     /// Lan machines class representing a detected machine.

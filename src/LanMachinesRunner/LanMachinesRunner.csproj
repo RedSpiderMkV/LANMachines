@@ -45,9 +45,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LanDiscovery\LanDiscovery.csproj">
+    <ProjectReference Include="..\LanDiscovery\RedSpider.LanDiscovery.csproj">
       <Project>{dbde29c5-dfd5-44c5-82f3-95aa9c5751db}</Project>
-      <Name>LanDiscovery</Name>
+      <Name>RedSpider.LanDiscovery</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

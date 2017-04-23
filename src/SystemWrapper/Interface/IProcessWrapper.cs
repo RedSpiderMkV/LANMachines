@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace SystemWrapper.Interface
+namespace RedSpider.SystemWrapper.Interface
 {
     /// <summary>
     /// Interface to the wrapper around <see cref="Process"/>.

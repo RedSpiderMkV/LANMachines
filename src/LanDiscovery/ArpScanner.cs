@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
-using SystemWrapper.Interface;
-using SystemWrapper.Interface.Factory;
+using RedSpider.SystemWrapper.Interface;
+using RedSpider.SystemWrapper.Interface.Factory;
 
-namespace LanDiscovery
+namespace RedSpider.LanDiscovery
 {
     /// <summary>
     /// Identify all network machines which respond to an arp request.
