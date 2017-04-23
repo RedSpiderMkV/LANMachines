@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
+using SystemWrapper.Interface;
+using SystemWrapper.Interface.Factory;
 
 namespace LanDiscovery
 {
@@ -13,33 +15,46 @@ namespace LanDiscovery
         #region Public Methods
 
         /// <summary>
+        /// Instantiate a new ArpScanner object with the provided ProcessWrapperFactory.
+        /// </summary>
+        /// <param name="processWrapperFactory">ProcessWrapperFactory - used to generate the process
+        /// to run the ARP scan.</param>
+        public ArpScanner(IProcessWrapperFactory processWrapperFactory)
+        {
+            processWrapperFactory_m = processWrapperFactory;
+        }
+
+        /// <summary>
         /// Get all machines which respond to the arp request.
         /// </summary>
         /// <returns>List of responding machines.</returns>
         public List<IPAddress> GetRespondingMachines()
         {
-            initialiseArpScanProc();
-
-            string procOut = "";
-            List<IPAddress> arpScanResults = new List<IPAddress>();
-            while ((procOut = arpProcess_m.StandardOutput.ReadLine()) != null)
+            var arpScanResults = new List<IPAddress>();
+            using (IProcessWrapper arpScanProcess = getArpScanProc())
             {
-                string[] parts = procOut.Trim().Split(' ');
+                arpScanProcess.Start();
 
-                if (parts.Length < 2 || parts[parts.Length - 1] == "invalid")
+                string procOut = "";
+                while ((procOut = arpScanProcess.StandardOuput.ReadLine()) != null)
                 {
-                    continue;
-                } // end if
+                    string[] parts = procOut.Trim().Split(' ');
 
-                string address = parts[0];
-                IPAddress ipAddress;
-                if (!String.IsNullOrEmpty(address) && char.IsDigit(address[0]) && IPAddress.TryParse(address, out ipAddress))
-                {
-                    arpScanResults.Add(ipAddress);
-                } // end if
-            } // end while
+                    if (parts.Length < 2 || parts[parts.Length - 1] == "invalid")
+                    {
+                        continue;
+                    } // end if
 
-            arpProcess_m.WaitForExit();
+                    string address = parts[0];
+                    IPAddress ipAddress;
+                    if (!String.IsNullOrEmpty(address) && char.IsDigit(address[0]) && IPAddress.TryParse(address, out ipAddress))
+                    {
+                        arpScanResults.Add(ipAddress);
+                    } // end if
+                } // end while
+
+                arpScanProcess.WaitForExit();
+            } // end using
 
             return arpScanResults;
         } // end method
@@ -49,10 +64,7 @@ namespace LanDiscovery
         /// </summary>
         public void Dispose()
         {
-            if (arpProcess_m != null)
-            {
-                arpProcess_m.Dispose();
-            } // end if
+            
         } // end method
 
         #endregion
@@ -60,12 +72,13 @@ namespace LanDiscovery
         #region Private Methods
 
         /// <summary>
-        /// Initialise the arp scanner process.
+        /// Retrieve an initialised ARP scanning process.
         /// </summary>
-        private void initialiseArpScanProc()
+        /// <returns>ARP scanning process.</returns>
+        private IProcessWrapper getArpScanProc()
         {
-            arpProcess_m = new Process();
-            ProcessStartInfo procInfo = new ProcessStartInfo()
+            var arpProcess = processWrapperFactory_m.GetNewProcessWrapper();
+            var procInfo = new ProcessStartInfo()
             {
                 FileName = "arp",
                 Arguments = "-a",
@@ -74,16 +87,16 @@ namespace LanDiscovery
                 CreateNoWindow = true
             };
 
-            arpProcess_m.StartInfo = procInfo;
-            arpProcess_m.Start();
+            arpProcess.StartInfo = procInfo;
+
+            return arpProcess;
         } // end method
 
         #endregion
 
         #region Private Data
 
-        // Arp command runner process.
-        private Process arpProcess_m;
+        private readonly IProcessWrapperFactory processWrapperFactory_m;
 
         #endregion
 

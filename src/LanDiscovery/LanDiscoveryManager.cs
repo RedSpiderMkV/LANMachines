@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
+using SystemWrapper.Factory;
+using SystemWrapper.Interface.Factory;
 
 namespace LanDiscovery
 {
@@ -16,6 +17,7 @@ namespace LanDiscovery
         public LanDiscoveryManager()
         {
             comparator_m = new LanMachineIdentityComparator();
+            processWrapperFactory_m = new ProcessWrapperFactory();
         } // end method
 
         /// <summary>
@@ -113,7 +115,7 @@ namespace LanDiscovery
         /// <returns>List of arp responders.</returns>
         private List<IPAddress> getArpScanResults()
         {
-            using (arpScanner_m = new ArpScanner())
+            using (arpScanner_m = new ArpScanner(processWrapperFactory_m))
             {
                 return arpScanner_m.GetRespondingMachines();
             } // end using
@@ -129,6 +131,7 @@ namespace LanDiscovery
         private ArpScanner arpScanner_m;
 
         private readonly IComparer<LanMachine> comparator_m;
+        private readonly IProcessWrapperFactory processWrapperFactory_m;
 
         #endregion
 
