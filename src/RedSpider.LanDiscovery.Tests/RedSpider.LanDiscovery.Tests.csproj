@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BBFFF396-634C-4CDB-A160-D9DA360A54E7}</ProjectGuid>
+    <ProjectGuid>{52F17C5A-B724-4A65-AC62-2E7933B53366}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SystemWrapper.Tests</RootNamespace>
-    <AssemblyName>SystemWrapper.Tests</AssemblyName>
+    <RootNamespace>RedSpider.LanDiscovery.Tests</RootNamespace>
+    <AssemblyName>RedSpider.LanDiscovery.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -16,7 +16,6 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -36,7 +35,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -51,10 +56,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ProcessWrapperFactoryTests.cs" />
+    <Compile Include="ArpScannerUnitTests.cs" />
+    <Compile Include="LanMachineTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LanDiscovery\RedSpider.LanDiscovery.csproj">
+      <Project>{dbde29c5-dfd5-44c5-82f3-95aa9c5751db}</Project>
+      <Name>RedSpider.LanDiscovery</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SystemWrapper\RedSpider.SystemWrapper.csproj">
       <Project>{69fa7292-d7b7-4416-a94b-1a19155f587a}</Project>
       <Name>RedSpider.SystemWrapper</Name>

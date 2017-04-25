@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.IO;
 using RedSpider.SystemWrapper.Interface;
 
 namespace RedSpider.SystemWrapper.Wrapper
@@ -9,7 +8,18 @@ namespace RedSpider.SystemWrapper.Wrapper
         #region Properties
 
         /// <inheritdoc />
-        public StreamReader StandardOuput { get { return process_m.StandardOutput; } }
+        public IStreamReaderWrapper StandardOuput
+        {
+            get
+            {
+                if(streamReaderWrapper_m == null)
+                {
+                    streamReaderWrapper_m = new StreamReaderWrapper(process_m.StandardOutput);
+                }
+
+                return streamReaderWrapper_m;
+            }
+        }
 
         /// <inheritdoc />
         public ProcessStartInfo StartInfo
@@ -56,6 +66,8 @@ namespace RedSpider.SystemWrapper.Wrapper
 
         // Internal process being wrapped.
         private readonly Process process_m;
+
+        private IStreamReaderWrapper streamReaderWrapper_m;
 
         #endregion
     }

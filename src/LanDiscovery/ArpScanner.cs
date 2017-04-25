@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
+using RedSpider.LanDiscovery.Interface;
 using RedSpider.SystemWrapper.Interface;
 using RedSpider.SystemWrapper.Interface.Factory;
 
@@ -10,7 +11,7 @@ namespace RedSpider.LanDiscovery
     /// <summary>
     /// Identify all network machines which respond to an arp request.
     /// </summary>
-    internal class ArpScanner : IDisposable
+    public class ArpScanner : IArpScanner
     {
         #region Public Methods
 
@@ -21,13 +22,15 @@ namespace RedSpider.LanDiscovery
         /// to run the ARP scan.</param>
         public ArpScanner(IProcessWrapperFactory processWrapperFactory)
         {
+            if(processWrapperFactory == null)
+            {
+                throw new NullReferenceException("ArpScanner: ProcessWrapper cannot be null.");
+            }
+
             processWrapperFactory_m = processWrapperFactory;
         }
 
-        /// <summary>
-        /// Get all machines which respond to the arp request.
-        /// </summary>
-        /// <returns>List of responding machines.</returns>
+        /// <inheritdoc />
         public List<IPAddress> GetRespondingMachines()
         {
             var arpScanResults = new List<IPAddress>();
@@ -47,7 +50,7 @@ namespace RedSpider.LanDiscovery
 
                     string address = parts[0];
                     IPAddress ipAddress;
-                    if (!String.IsNullOrEmpty(address) && char.IsDigit(address[0]) && IPAddress.TryParse(address, out ipAddress))
+                    if (IPAddress.TryParse(address, out ipAddress))
                     {
                         arpScanResults.Add(ipAddress);
                     } // end if
@@ -57,14 +60,6 @@ namespace RedSpider.LanDiscovery
             } // end using
 
             return arpScanResults;
-        } // end method
-
-        /// <summary>
-        /// Dispose of the arp runner process.
-        /// </summary>
-        public void Dispose()
-        {
-            
         } // end method
 
         #endregion

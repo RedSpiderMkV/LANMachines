@@ -1,23 +1,19 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
+using RedSpider.LanDiscovery.Interface;
 
 namespace RedSpider.LanDiscovery
 {
     /// <summary>
     /// Lan machines class representing a detected machine.
     /// </summary>
-    public class LanMachine
+    public class LanMachine : ILanMachine
     {
         #region Properties
 
-        /// <summary>
-        /// IP address of machine.
-        /// </summary>
+        /// <inheritdoc />
         public IPAddress MachineIPAddress { get; private set; }
 
-        /// <summary>
-        /// Name of machine from IP address.
-        /// </summary>
+        /// <inheritdoc />
         public string MachineName { get; private set; }
 
         #endregion

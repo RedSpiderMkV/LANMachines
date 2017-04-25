@@ -115,10 +115,8 @@ namespace RedSpider.LanDiscovery
         /// <returns>List of arp responders.</returns>
         private List<IPAddress> getArpScanResults()
         {
-            using (arpScanner_m = new ArpScanner(processWrapperFactory_m))
-            {
-                return arpScanner_m.GetRespondingMachines();
-            } // end using
+            arpScanner_m = new ArpScanner(processWrapperFactory_m);
+            return arpScanner_m.GetRespondingMachines();
         } // end method
 
         #endregion

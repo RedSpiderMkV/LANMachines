@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedSpider.SystemWrapper", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemWrapper.Tests", "SystemWrapper.Tests\SystemWrapper.Tests.csproj", "{BBFFF396-634C-4CDB-A160-D9DA360A54E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedSpider.LanDiscovery.Tests", "RedSpider.LanDiscovery.Tests\RedSpider.LanDiscovery.Tests.csproj", "{52F17C5A-B724-4A65-AC62-2E7933B53366}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,18 @@ Global
 		{BBFFF396-634C-4CDB-A160-D9DA360A54E7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{BBFFF396-634C-4CDB-A160-D9DA360A54E7}.Release|x86.ActiveCfg = Release|Any CPU
 		{BBFFF396-634C-4CDB-A160-D9DA360A54E7}.Release|x86.Build.0 = Release|Any CPU
+		{52F17C5A-B724-4A65-AC62-2E7933B53366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52F17C5A-B724-4A65-AC62-2E7933B53366}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52F17C5A-B724-4A65-AC62-2E7933B53366}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{52F17C5A-B724-4A65-AC62-2E7933B53366}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{52F17C5A-B724-4A65-AC62-2E7933B53366}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{52F17C5A-B724-4A65-AC62-2E7933B53366}.Debug|x86.Build.0 = Debug|Any CPU
+		{52F17C5A-B724-4A65-AC62-2E7933B53366}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52F17C5A-B724-4A65-AC62-2E7933B53366}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52F17C5A-B724-4A65-AC62-2E7933B53366}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{52F17C5A-B724-4A65-AC62-2E7933B53366}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{52F17C5A-B724-4A65-AC62-2E7933B53366}.Release|x86.ActiveCfg = Release|Any CPU
+		{52F17C5A-B724-4A65-AC62-2E7933B53366}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

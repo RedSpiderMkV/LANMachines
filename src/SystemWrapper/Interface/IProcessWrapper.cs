@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 
 namespace RedSpider.SystemWrapper.Interface
 {
@@ -17,7 +16,7 @@ namespace RedSpider.SystemWrapper.Interface
         /// <summary>
         /// Get the standard output from the process.
         /// </summary>
-        StreamReader StandardOuput { get; }
+        IStreamReaderWrapper StandardOuput { get; }
 
         /// <summary>
         /// Start the underlying process.
