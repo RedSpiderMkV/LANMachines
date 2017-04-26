@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading;
+using RedSpider.SystemWrapper.Interface;
+using RedSpider.SystemWrapper.Interface.Proxy;
 
 namespace RedSpider.LanDiscovery
 {
@@ -14,19 +16,23 @@ namespace RedSpider.LanDiscovery
         /// Instantiate a new object to ping all IP addresses on a network
         /// asynchronously.
         /// </summary>
-        public LanPingerAsync()
+        /// <param name="timeout">Ping timeout in milliseconds.</param>
+        /// <param name="networkInterfaceProxy">Network interface proxy.</param>
+        public LanPingerAsync(int timeout, INetworkInterfaceProxy networkInterfaceProxy)
         {
+            if(networkInterfaceProxy == null)
+            {
+                throw new NullReferenceException("LanPingerAsync: NetworkInterfaceProxy cannot be null.");
+            }
+
+            networkInterfaceProxy_m = networkInterfaceProxy;
+
             activePingers_m = 0;
             activeMachines_m = new List<IPAddress>();
 
             initialiseLanPingers();
             ipAddressBaseSet_m = initialiseIpBase();
 
-            timeout_m = 500;
-        } // end method
-
-        public LanPingerAsync(int timeout) : this()
-        {
             timeout_m = timeout;
         } // end method
 
@@ -34,7 +40,7 @@ namespace RedSpider.LanDiscovery
         /// Get a list of IP addresses which responded to the ping.
         /// </summary>
         /// <returns>List of IP reachable addresses.</returns>
-        public List<IPAddress> GetActiveMachineAddresses()
+        public IEnumerable<IPAddress> GetActiveMachineAddresses()
         {
             if (!ipAddressBaseSet_m)
             {
@@ -88,12 +94,13 @@ namespace RedSpider.LanDiscovery
         /// Get the active ethernet network interface.
         /// </summary>
         /// <returns>Active ethernet network interface.</returns>
-        private NetworkInterface getActiveEthernetInterface()
+        private INetworkInterfaceWrapper getActiveEthernetInterface()
         {
-            foreach (NetworkInterface networkInterface in NetworkInterface.GetAllNetworkInterfaces())
+            foreach (INetworkInterfaceWrapper networkInterface in networkInterfaceProxy_m.GetAllNetworkInterfaces())
             {
                 // TODO: Bluetooth dongle appears to match this if active...
-                if (networkInterface.NetworkInterfaceType == NetworkInterfaceType.Ethernet && networkInterface.OperationalStatus == OperationalStatus.Up)
+                if (networkInterface.NetworkInterfaceType == NetworkInterfaceType.Ethernet
+                    && networkInterface.OperationalStatus == OperationalStatus.Up)
                 {
                     return networkInterface;
                 } // end if
@@ -108,30 +115,21 @@ namespace RedSpider.LanDiscovery
         /// <returns>True if address was initialised.</returns>
         private bool initialiseIpBase()
         {
-            NetworkInterface networkInterface = getActiveEthernetInterface();
-
-            if (networkInterface != null)
+            INetworkInterfaceWrapper networkInterface = getActiveEthernetInterface();
+            if(networkInterface == null)
             {
-                GatewayIPAddressInformationCollection gateWayAddresses = networkInterface.GetIPProperties().GatewayAddresses;
+                return false;
+            }
 
-                if (gateWayAddresses != null && gateWayAddresses.Count > 0)
-                {
-                    string[] parts = gateWayAddresses[0].Address.ToString().Split('.');
+            IPAddress gatewayAddress = networkInterface.GatewayIPAddressOfFirstInterface();
+            if (gatewayAddress == null)
+            {
+                return false;
+            }
 
-                    if (parts.Length < 3)
-                    {
-                        ipAddressBase_m = null;
-                    }
-                    else
-                    {
-                        ipAddressBase_m = String.Format("{0}.{1}.{2}.", parts[0], parts[1], parts[2]);
+            ipAddressBase_m = gatewayAddress.ToString();
 
-                        return true;
-                    } // end if
-                } // end if
-            } // end if
-
-            return false;
+            return true;
         } // end method
 
         /// <summary>
@@ -170,10 +168,12 @@ namespace RedSpider.LanDiscovery
 
         private string ipAddressBase_m;
         private List<Ping> lanPingers_m;
-        private List<IPAddress> activeMachines_m;
         private bool ipAddressBaseSet_m;
         private int activePingers_m;
-        private int timeout_m;
+
+        private readonly IList<IPAddress> activeMachines_m;
+        private readonly int timeout_m;
+        private readonly INetworkInterfaceProxy networkInterfaceProxy_m;
 
         #endregion
 

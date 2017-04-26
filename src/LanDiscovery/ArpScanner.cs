@@ -31,7 +31,7 @@ namespace RedSpider.LanDiscovery
         }
 
         /// <inheritdoc />
-        public List<IPAddress> GetRespondingMachines()
+        public IEnumerable<IPAddress> GetRespondingMachines()
         {
             var arpScanResults = new List<IPAddress>();
             using (IProcessWrapper arpScanProcess = getArpScanProc())

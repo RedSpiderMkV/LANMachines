@@ -152,12 +152,12 @@ namespace RedSpider.LanDiscovery.Tests
             var sut = new ArpScanner(_processWrapperFactory);
 
             // Act
-            List<IPAddress> scanResults = sut.GetRespondingMachines();
+            IEnumerable<IPAddress> scanResults = sut.GetRespondingMachines();
 
             // Assert
-            Assert.AreEqual(IP_ADDRESS_COUNT, scanResults.Count);
-            Assert.AreEqual(IP_ADDRESS1, scanResults[0].ToString());
-            Assert.AreEqual(IP_ADDRESS2, scanResults[1].ToString());
+            Assert.AreEqual(IP_ADDRESS_COUNT, scanResults.Count());
+            Assert.AreEqual(IP_ADDRESS1, scanResults.ElementAt(0).ToString());
+            Assert.AreEqual(IP_ADDRESS2, scanResults.ElementAt(1).ToString());
         }
 
         /// <summary>
@@ -177,11 +177,11 @@ namespace RedSpider.LanDiscovery.Tests
             var sut = new ArpScanner(_processWrapperFactory);
 
             // Act
-            List<IPAddress> scanResults = sut.GetRespondingMachines();
+            IEnumerable<IPAddress> scanResults = sut.GetRespondingMachines();
 
             // Assert
-            Assert.AreEqual(IP_ADDRESS_COUNT, scanResults.Count);
-            Assert.AreEqual(VALID_IP_ADDRESS, scanResults[0].ToString());
+            Assert.AreEqual(IP_ADDRESS_COUNT, scanResults.Count());
+            Assert.AreEqual(VALID_IP_ADDRESS, scanResults.First().ToString());
         }
 
         #region Private Methods
@@ -199,7 +199,7 @@ namespace RedSpider.LanDiscovery.Tests
             var sut = new ArpScanner(_processWrapperFactory);
 
             // Act
-            List<IPAddress> scanResults = sut.GetRespondingMachines();
+            IEnumerable<IPAddress> scanResults = sut.GetRespondingMachines();
 
             // Assert
             Assert.IsFalse(scanResults.Any());

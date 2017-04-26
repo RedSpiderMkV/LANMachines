@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Net;
 using RedSpider.SystemWrapper.Factory;
 using RedSpider.SystemWrapper.Interface.Factory;
+using RedSpider.SystemWrapper.Interface.Proxy;
+using RedSpider.SystemWrapper.Proxy;
 
 namespace RedSpider.LanDiscovery
 {
@@ -18,6 +20,7 @@ namespace RedSpider.LanDiscovery
         {
             comparator_m = new LanMachineIdentityComparator();
             processWrapperFactory_m = new ProcessWrapperFactory();
+            networkInterfaceProxy_m = new NetworkInterfaceProxy();
         } // end method
 
         /// <summary>
@@ -26,7 +29,7 @@ namespace RedSpider.LanDiscovery
         /// <returns>List of network IP addresses.</returns>
         public List<LanMachine> GetNetworkMachines()
         {
-            List<IPAddress> uniqueMachineAddresses = getUniqueIpAddresses();
+            IList<IPAddress> uniqueMachineAddresses = getUniqueIpAddresses();
             List<LanMachine> lanMachines = getLanMachinesFromIpAddresses(uniqueMachineAddresses);
 
             lanMachines.Sort(comparator_m);
@@ -42,21 +45,20 @@ namespace RedSpider.LanDiscovery
         /// Retrieve a list of unique IP addresses detected on the LAN.
         /// </summary>
         /// <returns>List of unique IP addresses.</returns>
-        private List<IPAddress> getUniqueIpAddresses()
+        private IList<IPAddress> getUniqueIpAddresses()
         {
-            List<IPAddress> pingResponders = getLanPingResults();
-            List<IPAddress> arpResponders = getArpScanResults();
+            List<IPAddress> pingResponders = (List<IPAddress>)getLanPingResults();
+            List<IPAddress> arpResponders = (List<IPAddress>)getArpScanResults();
 
-            List<IPAddress> uniqueMachineAddresses = pingResponders;
             foreach (IPAddress lanIp in arpResponders)
             {
-                if (!uniqueMachineAddresses.Contains(lanIp))
+                if (!pingResponders.Contains(lanIp))
                 {
-                    uniqueMachineAddresses.Add(lanIp);
+                    pingResponders.Add(lanIp);
                 } // end if
             } // end foreach
 
-            return uniqueMachineAddresses;
+            return pingResponders;
         } // end method
 
         /// <summary>
@@ -65,7 +67,7 @@ namespace RedSpider.LanDiscovery
         /// </summary>
         /// <param name="ipAddresses">Machine IP addresses.</param>
         /// <returns>Lan machines.</returns>
-        private List<LanMachine> getLanMachinesFromIpAddresses(List<IPAddress> ipAddresses)
+        private List<LanMachine> getLanMachinesFromIpAddresses(IEnumerable<IPAddress> ipAddresses)
         {
             List<LanMachine> lanMachines = new List<LanMachine>();
 
@@ -95,11 +97,11 @@ namespace RedSpider.LanDiscovery
         /// Get the list of machines which responded to the lan ping test.
         /// </summary>
         /// <returns>List of lan ping responding.</returns>
-        private List<IPAddress> getLanPingResults()
+        private IEnumerable<IPAddress> getLanPingResults()
         {
-            using (lanPinger_m = new LanPingerAsync())
+            using (lanPinger_m = new LanPingerAsync(500, networkInterfaceProxy_m))
             {
-                List<IPAddress> respondingIpAddresses = lanPinger_m.GetActiveMachineAddresses();
+                IEnumerable<IPAddress> respondingIpAddresses = lanPinger_m.GetActiveMachineAddresses();
                 if (respondingIpAddresses == null)
                 {
                     return new List<IPAddress>();
@@ -113,7 +115,7 @@ namespace RedSpider.LanDiscovery
         /// Get the list of machines which responded to the arp request.
         /// </summary>
         /// <returns>List of arp responders.</returns>
-        private List<IPAddress> getArpScanResults()
+        private IEnumerable<IPAddress> getArpScanResults()
         {
             arpScanner_m = new ArpScanner(processWrapperFactory_m);
             return arpScanner_m.GetRespondingMachines();
@@ -130,6 +132,7 @@ namespace RedSpider.LanDiscovery
 
         private readonly IComparer<LanMachine> comparator_m;
         private readonly IProcessWrapperFactory processWrapperFactory_m;
+        private readonly INetworkInterfaceProxy networkInterfaceProxy_m;
 
         #endregion
 

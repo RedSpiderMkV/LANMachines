@@ -12,6 +12,6 @@ namespace RedSpider.LanDiscovery.Interface
         /// Get all machines which respond to the arp request.
         /// </summary>
         /// <returns>List of responding machines.</returns>
-        List<IPAddress> GetRespondingMachines();
+        IEnumerable<IPAddress> GetRespondingMachines();
     }
 }
