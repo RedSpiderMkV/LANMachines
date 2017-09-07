@@ -25,7 +25,7 @@ Example output running in a console
 
 ![run image](./assets/lanConsoleRun.PNG "Example Run")
 
-For a usage example, please see [this file for blocking mode operation](https://github.com/RedSpiderMkV/LANMachines/blob/master/src/LANMachines/LanMachinesRunner/LanDiscoveryBlocking.cs)
+For a usage example, please see [this file for blocking mode operation](https://github.com/RedSpiderMkV/LANMachines/blob/master/src/LanMachinesRunner/LanDiscoveryBlocking.cs)
 
 To Do
 -----
